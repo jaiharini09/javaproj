@@ -28,6 +28,7 @@
 @REM ----------------------------------------------------------------------------
 
 @IF "%JAVA_HOME%"=="" (IF EXIST "C:\Program Files\Microsoft\jdk-21.0.13.21-hotspot" SET "JAVA_HOME=C:\Program Files\Microsoft\jdk-21.0.13.21-hotspot")
+@IF "%DB_PASSWORD%"=="" for /f "tokens=2*" %%a in ('reg query "HKCU\Environment" /v DB_PASSWORD 2^>nul') do @set "DB_PASSWORD=%%b"
 @IF "%__MVNW_ARG0_NAME__%"=="" (SET __MVNW_ARG0_NAME__=%~nx0)
 @SET __MVNW_CMD__=
 @SET __MVNW_ERROR__=
@@ -49,6 +50,9 @@
 $ErrorActionPreference = "Stop"
 if (!$env:JAVA_HOME -and (Test-Path "C:\Program Files\Microsoft\jdk-21.0.13.21-hotspot")) {
   $env:JAVA_HOME = "C:\Program Files\Microsoft\jdk-21.0.13.21-hotspot"
+}
+if (!$env:DB_PASSWORD) {
+  $env:DB_PASSWORD = [Environment]::GetEnvironmentVariable("DB_PASSWORD", "User")
 }
 if ($env:MVNW_VERBOSE -eq "true") {
   $VerbosePreference = "Continue"
