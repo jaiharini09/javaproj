@@ -1,122 +1,107 @@
-🧳 Campus Lost & Found Management System
+# 🚀 SkillBridge – Student Skill Exchange Platform
 
-A real-time Campus Lost & Found Management System developed using Spring Boot and SQL Database.
-This project helps students and staff report lost or found items and retrieve them efficiently using a centralized digital platform.
+SkillBridge is a peer-to-peer campus platform where students can exchange knowledge and skills. Students can list skills they want to teach or learn, browse peer listings with categories and filters, propose skill swaps, and coordinate learning sessions through direct messaging.
 
-🚀 Features
+---
 
-📌 Report Lost or Found items
+## 🛠️ Tech Stack
 
-📊 Real-time data storage using SQL database
+* **Backend**: Java 21, Spring Boot 3.3.5, Spring Data JPA, Hibernate, Bean Validation
+* **Database**: MySQL 8.0
+* **Frontend**: HTML5, Tailwind CSS, JavaScript (Vanilla ES6+ SPA)
+* **Build Tool**: Apache Maven (Maven Wrapper included)
 
-🔍 View all lost & found items with filtering
+---
 
-🔗 REST API integration for frontend support
+## 🌟 Key Features
 
-🧩 Clean and scalable Spring Boot architecture
+1. **Skill Discovery & Search**:
+   * Filter skills by type (`TEACH` vs `LEARN`), category (Programming, Design, Languages, Academics, Music, etc.), and keyword.
+   * View student profile details, proficiency levels, and availability.
+2. **Learning / Exchange Proposals**:
+   * Send exchange requests proposing mutual skill swaps.
+   * Manage incoming and outgoing proposals with status tracking (`PENDING`, `ACCEPTED`, `REJECTED`, `COMPLETED`).
+3. **Peer Messaging & Coordination**:
+   * Threaded peer-to-peer chat between matched students to coordinate study sessions.
+   * Unread message tracking and instant updates.
+4. **Student Profiles**:
+   * View and update student bio, college/department, year of study, contact info, and active skill listings.
+5. **Pre-Seeded Demo Data**:
+   * Automatically initializes sample student profiles and listings on first launch for immediate testing.
 
-🌐 CORS-enabled backend for web frontend
+---
 
-🕒 Latest items shown first
+## ⚙️ REST API Endpoints
 
-🛠️ Tech Stack
-Backend
+### 🔐 Authentication
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Register a new student account |
+| `POST` | `/api/auth/login` | Authenticate student |
+| `GET` | `/api/auth/me/{id}` | Fetch current student profile |
 
-Java
+### 📚 Skills
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/skills` | Search/filter skills (`query`, `category`, `skillType`) |
+| `GET` | `/api/skills/{id}` | Fetch skill details by ID |
+| `GET` | `/api/skills/user/{userId}` | Fetch all skills created by a student |
+| `POST` | `/api/skills` | Create a new skill listing (`TEACH` / `LEARN`) |
+| `DELETE` | `/api/skills/{id}?userId={userId}` | Delete a skill listing |
 
-Spring Boot
+### 🔄 Exchange Requests
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/requests` | Send an exchange proposal to a peer |
+| `GET` | `/api/requests/incoming?userId={userId}` | View incoming exchange requests |
+| `GET` | `/api/requests/outgoing?userId={userId}` | View outgoing exchange requests |
+| `PUT` | `/api/requests/{id}/status` | Update status (`ACCEPTED`, `REJECTED`, `COMPLETED`) |
 
-Spring Data JPA
+### 💬 Messaging
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/messages/send` | Send a direct message |
+| `GET` | `/api/messages/conversation?user1={id}&user2={id}` | Get conversation history |
+| `GET` | `/api/messages/unread-count?userId={id}` | Get total unread messages count |
+| `GET` | `/api/messages/threads?userId={id}` | Get list of active conversation threads |
 
-REST APIs
+---
 
-Database
+## ▶️ How to Run Locally
 
-MySQL (or any SQL-based database)
+### 1. Prerequisites
+* **Java 21 LTS**
+* **MySQL 8.0** running locally on port 3306
 
-Frontend
+### 2. Configure Database (Optional)
+By default, the application connects to `jdbc:mysql://localhost:3306/skillbridge`.
+You can override credentials via environment variables:
+```bash
+set DB_USERNAME=root
+set DB_PASSWORD=your_password
+```
 
-HTML
+### 3. Run the Application
+Using the Maven Wrapper:
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+Or simply run:
+```powershell
+.\run.bat
+```
 
-Tailwind CSS
+### 4. Open in Browser
+* **Web Application**: [http://localhost:8080/](http://localhost:8080/)
+* **API Documentation/Skills**: [http://localhost:8080/api/skills](http://localhost:8080/api/skills)
 
-JavaScript
+---
 
-🗂️ Project Structure
-src/main/java/com/college/lostfound
-│
-├── LostFoundApplication.java
-├── Item.java
-├── ItemService.java
-├── ItemController.java
-├── ItemRepository.java
-│
-resources/
-├── application.properties
+## 👥 Demo Accounts
 
-🧱 Database Schema
-CREATE TABLE items (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
-    description TEXT,
-    category VARCHAR(100),
-    location VARCHAR(255),
-    type ENUM('LOST','FOUND'),
-    contact VARCHAR(150),
-    image_url VARCHAR(500),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-⚙️ API Endpoints
-Method	Endpoint	Description
-GET	/items	Fetch all items
-GET	/items?type=LOST	Fetch lost items
-GET	/items?type=FOUND	Fetch found items
-GET	/items/{id}	Get item by ID
-POST	/items	Add a new item
-▶️ How to Run the Project
-
-Clone the repository:
-
-git clone https://github.com/your-username/campus-lost-found.git
-
-
-Configure database in application.properties
-
-Run the Spring Boot application:
-
-mvn spring-boot:run
-
-
-Open in browser:
-
-http://localhost:8080/items
-
-🎯 Use Case
-
-College campuses
-
-Hostels
-
-Schools
-
-Public institutions
-
-Hackathons & academic projects
-
-📌 Future Enhancements
-
-🔐 User authentication
-
-💬 In-app chat between finder & owner
-
-📱 Mobile app support
-
-🤖 AI-based item matching
-
-📸 Image upload support
-
-👨‍💻 Developed By
-
-Kishor Kumar
-Mini Project | Java & Spring Boot
+| Student Name | Email | Password | Role |
+| :--- | :--- | :--- | :--- |
+| **Alice Johnson** | `alice@easwari.edu` | `password123` | Teaches React & Spring Boot |
+| **Bob Smith** | `bob@easwari.edu` | `password123` | Teaches Python & Data Science |
+| **Chloe Davis** | `chloe@easwari.edu` | `password123` | Teaches Figma UI/UX Design |
+| **David Miller** | `david@easwari.edu` | `password123` | Teaches German & Classical Guitar |
